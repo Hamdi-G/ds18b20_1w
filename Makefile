@@ -1,5 +1,5 @@
 #obj-m += pritam.o aartyaa.o
-# obj-m += ds18b20.o 
+obj-m += ds18b20.o 
 
 CROSS_COMPILE = arm-linux-gnueabihf-
 RPI_COMPILE_OPTION = ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE)
