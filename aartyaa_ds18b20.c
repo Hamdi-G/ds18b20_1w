@@ -73,7 +73,11 @@ static void ds18b20_write_bit(struct ds18b20_data *pdata, int bit)
 		udelay(6);
 
                 gpio_direction_input(pdata->pin);
-		udelay(6);
+		udelay(9);
+		
+		ds18b20_gpio_read_bit(pdata);
+	        udelay(55);
+
         } else {
                 gpio_direction_output(pdata->pin, 0);
                 udelay(60);
@@ -130,7 +134,8 @@ void ds18b20_write_byte(struct ds18b20_data *pdata, u8 byte)
         
 	printk("ds18b20_write_byte : byte = %x\n", byte);
 	for (i = 0; i < 8; ++i) 
-		ds18b20_touch_bit(pdata, (byte >> i) & 0x1);
+		// ds18b20_touch_bit(pdata, (byte >> i) & 0x1);
+		ds18b20_write_bit(pdata, (byte >> i) & 0x1);
 }
 
 u8 ds18b20_read_block(struct ds18b20_data *pdata, u8 *buf, int len)
