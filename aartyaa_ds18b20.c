@@ -91,13 +91,13 @@ static u8 ds18b20_read_bit(struct ds18b20_data *pdata)
 {
         int result;
 
-	ds18b20_gpio_set_dir(pdata, 0);
+	gpio_direction_output(pdata->pin, 0);
 	udelay(6);
 
-	ds18b20_gpio_set_dir(pdata, 1);
+	gpio_direction_input(pdata->pin);
         udelay(9);
 
-	result = ds18b20_gpio_read_bit(pdata);
+	result =  gpio_get_value(pdata->pin) ? 1 : 0; 
        	udelay(55);
 
         return result & 0x1;
@@ -134,7 +134,6 @@ void ds18b20_write_byte(struct ds18b20_data *pdata, u8 byte)
         
 	printk("ds18b20_write_byte : byte = %x\n", byte);
 	for (i = 0; i < 8; ++i) 
-		// ds18b20_touch_bit(pdata, (byte >> i) & 0x1);
 		ds18b20_write_bit(pdata, (byte >> i) & 0x1);
 }
 
@@ -149,7 +148,6 @@ u8 ds18b20_read_block(struct ds18b20_data *pdata, u8 *buf, int len)
                 printk("w1_read_block : buf[%d] = %x\n", i, buf[i]);
         }
         ret = len;
-
 
         return ret;
 }
@@ -268,8 +266,8 @@ static int ds18b20_reset_bus(struct ds18b20_data *pdata)
 u8 ds18b20_triplet(struct ds18b20_data *pdata, int bdir)
 {
 
-        u8 id_bit   = ds18b20_touch_bit(pdata, 1);
-        u8 comp_bit = ds18b20_touch_bit(pdata, 1);
+        u8 id_bit   = ds18b20_read_bit(pdata);
+        u8 comp_bit = ds18b20_read_bit(pdata);
         u8 retval;
 
         printk("ds18b20_triplet : id_bit = %d, comp_bit = %d\n", id_bit, comp_bit);
