@@ -51,16 +51,6 @@ static int ds18b20_close(struct inode *inode, struct file *filp)
 	return 0;
 }
 
-
-static void ds18b20_gpio_set_dir(struct ds18b20_data *pdata, u8 bit)
-{
-        if (bit)
-                gpio_direction_input(pdata->pin);
-        else
-                gpio_direction_output(pdata->pin, 0);
-}
-
-
 static u8 ds18b20_gpio_read_bit(struct ds18b20_data *pdata)
 {
         return gpio_get_value(pdata->pin) ? 1 : 0;
@@ -158,10 +148,8 @@ u8 ds18b20_crc(u8 * data, int len)
 
 static int read_ds18b20_temp(char *temp_buf)  
 {
-	int ret = -1, i, count;
+	int i, count;
 	u8 scratch_pad[9];
-	unsigned int tm = 750;	
-	unsigned long sleep_rem;
 	int temp;
 	
 	printk("read_ds18b20_temp : pdata->pin = %d\n", data.pin);
@@ -262,7 +250,7 @@ u8 ds18b20_triplet(struct ds18b20_data *pdata, int bdir)
 static int ds18b20_ROM_search(struct ds18b20_data *p_data)
 {
 	int triplet_ret = -1, i;	
-	u64 last_rn, rn = 0, tmp64;
+	u64  rn = 0, tmp64, rn_le;
 	int last_zero;
 	struct ds18b20_reg_num *tmp;
 	
@@ -297,7 +285,7 @@ retry :
 	}
 	
 	tmp = (struct ds18b20_reg_num *) &rn;
-	u64 rn_le = cpu_to_le64(rn);
+	rn_le = cpu_to_le64(rn);
 
 	printk("temp->crc = %x, temp->id = %llx, temp->family = %x\n", tmp->crc, tmp->id, tmp->family);
 	if (tmp->crc != ds18b20_crc((u8 *)&rn_le, 7)) 

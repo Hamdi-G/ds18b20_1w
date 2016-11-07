@@ -67,47 +67,4 @@ struct ds18b20_reg_num
                 crc:8;
 };
 
-#if 0
-inline void write_to_reg(u32 b, volatile void __iomem *addr)
-{
-	printk(KERN_INFO "write_to_reg : address = %x, b = %ld\n", addr, b); 
-        __raw_writel(b, addr);
-        mb();
-}
-
-extern inline void ds18b20_gpio_function(u8 pin, u16 gpio_fun)
-{       	
-	u32 val; 
-	
-      	// void __iomem *base_addr = (void __iomem *)GPIO_REG_BASE;
-      	void __iomem *base_addr = (void __iomem *)(0xf2200000);
-
-	base_addr = 0xf2200000;
-	printk("ds18b20_gpio_function : pin = %d, gpio_fun = %x\n", pin, gpio_fun);
-
-	u8 offset = (pin / 10) * 4;	
-	pin = (pin % 10) * 3; 	
-	val =  gpio_fun << pin;	
-	
-	printk("ds18b20_gpio_function : pin = %d, val = %x, base_address + offset = %x\n", pin, val, base_addr + offset);
-
-        write_to_reg(val, base_addr + offset);
-}
-
-extern inline void ds18b20_gpio_output(u8 pin, u8 gpio_output_set)
-{
-	u32 val; 
-      	void __iomem *base_addr = (void __iomem *)OUTPUT_SET_REG_1;
-
-	u8 offset = (pin / 32) * 4; 
-	pin = (pin % 32);
-	val = gpio_output_set << pin;	
-
-	printk("ds18b20_gpio_output : offset = %x, pin = %d, val = %x, base_addr + offset = %x\n", offset, pin, base_addr + offset);
-        
-	write_to_reg(val, base_addr + offset);
-
-}
-
-#endif 
 #endif

@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 	
 	temp = ( (buffer[0] << 8) | buffer[1]);
 	
-	printf("DS18B20 TEMP = %d\n", temp);
+	printf("DS18B20 TEMP = %f\n", temp/1000.0);
 
 	close(devfile);
 
