@@ -283,7 +283,7 @@ static int ds18b20_ROM_search(struct ds18b20_data *p_data)
 	int triplet_ret = -1, i;	
 	u64 last_rn, rn = 0, tmp64;
 	int last_zero;
-	struct w1_reg_num *tmp;
+	struct ds18b20_reg_num *tmp;
 	
 	if ( ds18b20_reset_bus(p_data) ) {
 		printk("ds18b20_ROM_search : no device present on the bus\n");
@@ -313,7 +313,7 @@ static int ds18b20_ROM_search(struct ds18b20_data *p_data)
 		printk("rn = %llx\n", rn);
 	}
 	
-	tmp = (struct w1_reg_num *) &rn;
+	tmp = (struct ds18b20_reg_num *) &rn;
 
 	printk("temp->crc = %x, temp->id = %llx, temp->family = %x\n", tmp->crc, tmp->id, tmp->family);
 	return 0;

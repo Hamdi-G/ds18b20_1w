@@ -60,7 +60,7 @@ struct ds18b20_data
         unsigned int pullup_duration;
 };
 
-struct w1_reg_num
+struct ds18b20_reg_num
 {
         __u64   family:8,
                 id:48,
