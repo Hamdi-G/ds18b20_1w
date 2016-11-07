@@ -23,7 +23,6 @@ rpi:
 	
 	$(MAKE) $(RPI_COMPILE_OPTION) -C $(KERNEL_DIR) M=$(PWD) modules
 	$(CROSS_COMPILE)$(GCC) -o $(READ_EXE) $(SOURCE_READ_CODE) 
-	$(CROSS_COMPILE)$(GCC) -o $(WRITE_EXE) $(SOURCE_WRITE_CODE) 
 
 
 rpi_clean:

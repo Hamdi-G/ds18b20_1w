@@ -103,27 +103,15 @@ static u8 ds18b20_read_bit(struct ds18b20_data *pdata)
         return result & 0x1;
 }
 
-
-static u8 ds18b20_touch_bit(struct ds18b20_data *pdata, int bit)
-{
-        printk("ds18b20_touch_bit : bit = %d\n", bit);
-	if (bit)
-                return ds18b20_read_bit(pdata);
-        else 
-                ds18b20_write_bit(pdata, 0);
-
-	return 0;
-}
-
 u8 ds18b20_read_byte(struct ds18b20_data *pdata)
 {
         int i;
         u8 res = 0;
 
 	for (i = 0; i < 8; ++i)
-		res |= (ds18b20_touch_bit(pdata, 1) << i);
+		res |= (ds18b20_read_bit(pdata) << i);
 
-	printk("ds18b20_read_byte : res = %x\n", res);
+	printk("ds18b20_read_byte :  res = %x\n", res);
 
         return res;
 }
@@ -152,33 +140,13 @@ u8 ds18b20_read_block(struct ds18b20_data *pdata, u8 *buf, int len)
         return ret;
 }
 
-static inline int ds18b20_convert_temp(u8 rom[9])
-{
-        int t, h;
-
-        if (!rom[7])
-                return 0;
-
-        if (rom[1] == 0)
-                t = ((s32)rom[0] >> 1)*1000;
-        else
-                t = 1000*(-1*(s32)(0x100-rom[0]) >> 1);
-
-        t -= 250;
-        h = 1000*((s32)rom[7] - (s32)rom[6]);
-        h /= (s32)rom[7];
-        t += h;
-
-        return t;
-}
-
 static inline int DS18B20_convert_temp(u8 rom[9])
 {
         s16 t = le16_to_cpup((__le16 *)rom);
-        return t*1000/16;
+	return t*1000/16;
 }
 
-u8 w1_calc_crc8(u8 * data, int len)
+u8 ds18b20_crc(u8 * data, int len)
 {
         u8 crc = 0;
 
@@ -220,7 +188,7 @@ static int read_ds18b20_temp(char *temp_buf)
 	
         printk("\n");
 	
-	if ( w1_calc_crc8(scratch_pad, 8 ) != scratch_pad[8] ) {
+	if ( ds18b20_crc(scratch_pad, 8 ) != scratch_pad[8] ) {
 		printk("read_ds18b20_temp : failed to cal crc\n");
 		return -3;
 	}
@@ -229,7 +197,7 @@ static int read_ds18b20_temp(char *temp_buf)
 	temp_buf[0] = temp >> 8;
 	temp_buf[1] = temp & 0x00ff;
 
-	printk("read_ds18b20_temp : temp = %d, temp_buf1 = %d, temp_buf2 = %d\n", temp, temp_buf[0], temp_buf[1]);
+	printk("read_ds18b20_temp : prityaa temp = %d, temp_buf1 = %d, temp_buf2 = %d\n", temp, temp_buf[0], temp_buf[1]);
 
 	return 0;
 }
@@ -284,7 +252,7 @@ u8 ds18b20_triplet(struct ds18b20_data *pdata, int bdir)
                 retval = id_bit ? 0x05 : 0x02;
         }
 
-        printk("w1_triplet : bdir = %d, retval = %d\n", bdir, retval);
+        printk("ds18b20_triplet : bdir = %d, retval = %d\n", bdir, retval);
 
         ds18b20_write_bit(pdata, bdir);
 
@@ -298,6 +266,8 @@ static int ds18b20_ROM_search(struct ds18b20_data *p_data)
 	int last_zero;
 	struct ds18b20_reg_num *tmp;
 	
+retry :
+	/* each operation starts with init */
 	if ( ds18b20_reset_bus(p_data) ) {
 		printk("ds18b20_ROM_search : no device present on the bus\n");
 		return -1;
@@ -306,7 +276,7 @@ static int ds18b20_ROM_search(struct ds18b20_data *p_data)
 	/* Start the search */ 
         ds18b20_write_byte(p_data, DS18B20_SEARCH);	
 	for (i = 0; i < 64; ++i) {
-		/* Read two bits and write one bit */
+		/* read two bits and write vali data bit recieved from slave */
 		triplet_ret = ds18b20_triplet(p_data, DS18B20_SEARCH);
 		printk("ds18b20_ROM_search : triplet_ret %d = %d\n", i, triplet_ret);
 
@@ -327,8 +297,12 @@ static int ds18b20_ROM_search(struct ds18b20_data *p_data)
 	}
 	
 	tmp = (struct ds18b20_reg_num *) &rn;
+	u64 rn_le = cpu_to_le64(rn);
 
 	printk("temp->crc = %x, temp->id = %llx, temp->family = %x\n", tmp->crc, tmp->id, tmp->family);
+	if (tmp->crc != ds18b20_crc((u8 *)&rn_le, 7)) 
+		goto retry;	
+
 	return 0;
 }
 
@@ -336,11 +310,6 @@ static int ds18b20_gpio_init(struct ds18b20_data *p_data)
 {
 	int ret = -1;
 
-	/*
-	if ( (data = kmalloc(sizeof (struct ds18b20_data), GFP_KERNEL) ) == NULL ) {
-		printk("read_ds18b20_id : failed to alloc mem\n");
-	}
-	*/
 	printk("ds18b20_gpio_init : pin = %d, p_data->ext_pullup_pin = %d\n", p_data->pin, p_data->ext_pullup_pin);
 	
 	ret = gpio_request(p_data->pin, "ds18b20");
