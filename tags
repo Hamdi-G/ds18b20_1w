@@ -1,0 +1,90 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BUFFER_SIZE	aartyaa_ds18b20.h	5;"	d
+CROSS_COMPILE	Makefile	/^CROSS_COMPILE = arm-linux-gnueabihf-$/;"	m
+DEVICENAME	aartyaa_ds18b20.h	6;"	d
+DS18B20_CONVERT_TEMP	aartyaa_ds18b20.h	30;"	d
+DS18B20_DQ_GPIO_PIN	aartyaa_ds18b20.h	7;"	d
+DS18B20_READ_SCRATCHPAD	aartyaa_ds18b20.h	31;"	d
+DS18B20_SEARCH	aartyaa_ds18b20.h	28;"	d
+DS18B20_SKIP_ROM	aartyaa_ds18b20.h	29;"	d
+DS18B20_convert_temp	aartyaa_ds18b20.c	/^static inline int DS18B20_convert_temp(u8 rom[9])$/;"	f	file:
+FUN_ALT0_SET	aartyaa_ds18b20.h	26;"	d
+FUN_ALT_1	aartyaa_ds18b20.h	21;"	d
+FUN_ALT_2	aartyaa_ds18b20.h	22;"	d
+FUN_ALT_3	aartyaa_ds18b20.h	23;"	d
+FUN_INPUT	aartyaa_ds18b20.h	19;"	d
+FUN_OUTPUT	aartyaa_ds18b20.h	20;"	d
+GCC	Makefile	/^GCC = gcc$/;"	m
+GPIO_REG_BASE	aartyaa_ds18b20.h	13;"	d
+GPIO_REG_PHY_BASE	aartyaa_ds18b20.h	17;"	d
+HIGH	aartyaa_ds18b20.h	8;"	d
+KERNEL_DIR	Makefile	/^KERNEL_DIR = \/home\/prityaa\/documents\/workspace\/embeded\/raspbery_pi\/code_base\/gpio_static_module\/linux$/;"	m
+LOW	aartyaa_ds18b20.h	9;"	d
+OUTPUT_SET	aartyaa_ds18b20.h	25;"	d
+OUTPUT_SET_REG_1	aartyaa_ds18b20.h	14;"	d
+OUTPUT_SET_REG_2	aartyaa_ds18b20.h	15;"	d
+PATH	read.c	11;"	d	file:
+READ_EXE	Makefile	/^READ_EXE = DS18B20_TEMP_READ$/;"	m
+RPI_COMPILE_OPTION	Makefile	/^RPI_COMPILE_OPTION = ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE)$/;"	m
+RPI_DQ_GPIO_PIN	aartyaa_ds18b20.h	10;"	d
+SOURCE_READ_CODE	Makefile	/^SOURCE_READ_CODE = read.c$/;"	m
+SOURCE_WRITE_CODE	Makefile	/^SOURCE_WRITE_CODE = write.c$/;"	m
+WRITE_EXE	Makefile	/^WRITE_EXE = DS18B20_TEMP_WRITE$/;"	m
+_DS18B20_H_	aartyaa_ds18b20.h	2;"	d
+base	aartyaa_ds18b20.h	/^void __iomem *base;$/;"	v
+crc	aartyaa_ds18b20.h	/^                crc:8;$/;"	m	struct:ds18b20_reg_num
+crc_table	aartyaa_ds18b20.h	/^static u8 crc_table[] = {$/;"	v
+data	aartyaa_ds18b20.c	/^struct ds18b20_data data = {$/;"	v	typeref:struct:ds18b20_data
+data	aartyaa_ds18b20.c	/^struct ds18b20_data data;$/;"	v	typeref:struct:ds18b20_data
+device_buffer	aartyaa_ds18b20.c	/^static char device_buffer[BUFFER_SIZE] = "aartyaa i lovce you, i cant live without you";$/;"	v	file:
+device_info	aartyaa_ds18b20.c	/^struct device *device_info;$/;"	v	typeref:struct:device
+ds18b20_ROM_search	aartyaa_ds18b20.c	/^static int ds18b20_ROM_search(struct ds18b20_data *p_data)$/;"	f	file:
+ds18b20_chr_dev	aartyaa_ds18b20.c	/^struct cdev ds18b20_chr_dev; \/*this is the name of my char driver that i will be registering*\/$/;"	v	typeref:struct:cdev
+ds18b20_close	aartyaa_ds18b20.c	/^static int ds18b20_close(struct inode *inode, struct file *filp) $/;"	f	file:
+ds18b20_convert_temp	aartyaa_ds18b20.c	/^static inline int ds18b20_convert_temp(u8 rom[9])$/;"	f	file:
+ds18b20_data	aartyaa_ds18b20.h	/^struct ds18b20_data$/;"	s
+ds18b20_dev_num	aartyaa_ds18b20.c	/^dev_t ds18b20_dev_num; \/*will hold the major number that the kernel gives*\/$/;"	v
+ds18b20_device_class	aartyaa_ds18b20.c	/^static struct class *ds18b20_device_class;$/;"	v	typeref:struct:class	file:
+ds18b20_exit	aartyaa_ds18b20.c	/^module_exit(ds18b20_exit);$/;"	v
+ds18b20_exit	aartyaa_ds18b20.c	/^void ds18b20_exit(void)$/;"	f
+ds18b20_gpio_init	aartyaa_ds18b20.c	/^static int ds18b20_gpio_init(struct ds18b20_data *p_data)$/;"	f	file:
+ds18b20_gpio_read_bit	aartyaa_ds18b20.c	/^static u8 ds18b20_gpio_read_bit(struct ds18b20_data *pdata)$/;"	f	file:
+ds18b20_gpio_set_dir	aartyaa_ds18b20.c	/^static void ds18b20_gpio_set_dir(struct ds18b20_data *pdata, u8 bit)$/;"	f	file:
+ds18b20_init	aartyaa_ds18b20.c	/^int ds18b20_init(void) $/;"	f
+ds18b20_init	aartyaa_ds18b20.c	/^module_init(ds18b20_init);$/;"	v
+ds18b20_open	aartyaa_ds18b20.c	/^static int ds18b20_open(struct inode *inode, struct file *filp) $/;"	f	file:
+ds18b20_read	aartyaa_ds18b20.c	/^static ssize_t ds18b20_read(struct file *fp, char *buff, size_t length, loff_t *ppos) $/;"	f	file:
+ds18b20_read_bit	aartyaa_ds18b20.c	/^static u8 ds18b20_read_bit(struct ds18b20_data *pdata)$/;"	f	file:
+ds18b20_read_block	aartyaa_ds18b20.c	/^u8 ds18b20_read_block(struct ds18b20_data *pdata, u8 *buf, int len)$/;"	f
+ds18b20_read_byte	aartyaa_ds18b20.c	/^u8 ds18b20_read_byte(struct ds18b20_data *pdata)$/;"	f
+ds18b20_reg_num	aartyaa_ds18b20.h	/^struct ds18b20_reg_num$/;"	s
+ds18b20_reset_bus	aartyaa_ds18b20.c	/^static int ds18b20_reset_bus(struct ds18b20_data *pdata)$/;"	f	file:
+ds18b20_touch_bit	aartyaa_ds18b20.c	/^static u8 ds18b20_touch_bit(struct ds18b20_data *pdata, int bit)$/;"	f	file:
+ds18b20_triplet	aartyaa_ds18b20.c	/^u8 ds18b20_triplet(struct ds18b20_data *pdata, int bdir)$/;"	f
+ds18b20_write	aartyaa_ds18b20.c	/^static ssize_t ds18b20_write(struct file *fp, const char *buff, size_t length, loff_t *ppos) $/;"	f	file:
+ds18b20_write_bit	aartyaa_ds18b20.c	/^static void ds18b20_write_bit(struct ds18b20_data *pdata, int bit)$/;"	f	file:
+ds18b20_write_byte	aartyaa_ds18b20.c	/^void ds18b20_write_byte(struct ds18b20_data *pdata, u8 byte)$/;"	f
+ext_pullup_pin	aartyaa_ds18b20.h	/^        unsigned int ext_pullup_pin;$/;"	m	struct:ds18b20_data
+family	aartyaa_ds18b20.h	/^        __u64   family:8,$/;"	m	struct:ds18b20_reg_num
+fops	aartyaa_ds18b20.c	/^struct file_operations fops = \/* these are the file operations provided by our driver *\/$/;"	v	typeref:struct:file_operations
+high	aartyaa_ds18b20.h	/^enum rpi_gpio4_state {low, high};$/;"	e	enum:rpi_gpio4_state
+id	aartyaa_ds18b20.h	/^                id:48,$/;"	m	struct:ds18b20_reg_num
+input	aartyaa_ds18b20.h	/^enum rpi_gpio4_direction {input, output};$/;"	e	enum:rpi_gpio4_direction
+low	aartyaa_ds18b20.h	/^enum rpi_gpio4_state {low, high};$/;"	e	enum:rpi_gpio4_state
+main	read.c	/^int main(int argc, char **argv)$/;"	f
+major_number	aartyaa_ds18b20.c	/^int major_number; \/* will store the major number extracted by dev_t*\/$/;"	v
+output	aartyaa_ds18b20.h	/^enum rpi_gpio4_direction {input, output};$/;"	e	enum:rpi_gpio4_direction
+pin	aartyaa_ds18b20.h	/^	unsigned int pin;$/;"	m	struct:ds18b20_data
+pullup_duration	aartyaa_ds18b20.h	/^        unsigned int pullup_duration;$/;"	m	struct:ds18b20_data
+read_ds18b20_id	aartyaa_ds18b20.c	/^static int read_ds18b20_id(void)$/;"	f	file:
+read_ds18b20_temp	aartyaa_ds18b20.c	/^static int read_ds18b20_temp(char *temp_buf)  $/;"	f	file:
+ret	aartyaa_ds18b20.c	/^int ret; \/*used to return values*\/$/;"	v
+rpi_gpio4_direction	aartyaa_ds18b20.h	/^enum rpi_gpio4_direction {input, output};$/;"	g
+rpi_gpio4_state	aartyaa_ds18b20.h	/^enum rpi_gpio4_state {low, high};$/;"	g
+sem	aartyaa_ds18b20.c	/^struct semaphore sem;$/;"	v	typeref:struct:semaphore
+w1_calc_crc8	aartyaa_ds18b20.c	/^u8 w1_calc_crc8(u8 * data, int len)$/;"	f
