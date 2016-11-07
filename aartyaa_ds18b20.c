@@ -69,16 +69,16 @@ static u8 ds18b20_gpio_read_bit(struct ds18b20_data *pdata)
 static void ds18b20_write_bit(struct ds18b20_data *pdata, int bit)
 {
         if (bit) {
-		ds18b20_gpio_set_dir(pdata, 0);
+                gpio_direction_output(pdata->pin, 0);
 		udelay(6);
 
-		ds18b20_gpio_set_dir(pdata, 1);
+                gpio_direction_input(pdata->pin);
 		udelay(6);
         } else {
-		ds18b20_gpio_set_dir(pdata, 0);
+                gpio_direction_output(pdata->pin, 0);
                 udelay(60);
 
-                ds18b20_gpio_set_dir(pdata, 1);
+                gpio_direction_input(pdata->pin);
                 udelay(10);
         }
 }
@@ -105,10 +105,10 @@ static u8 ds18b20_touch_bit(struct ds18b20_data *pdata, int bit)
         printk("ds18b20_touch_bit : bit = %d\n", bit);
 	if (bit)
                 return ds18b20_read_bit(pdata);
-        else {
+        else 
                 ds18b20_write_bit(pdata, 0);
-                return 0;
-        }
+
+	return 0;
 }
 
 u8 ds18b20_read_byte(struct ds18b20_data *pdata)
@@ -231,19 +231,30 @@ static int read_ds18b20_temp(char *temp_buf)
 	return 0;
 }
 
-
 static int ds18b20_reset_bus(struct ds18b20_data *pdata)
 {
 	int result;
 
 	printk("ds18b20_reset_bus : pin = %d\n", pdata->pin);	
 	
-	ds18b20_gpio_set_dir(pdata, 0);
+	/* initialisation sequense, bus goes low */
+	gpio_direction_output(pdata->pin, 0);
 	udelay(500);
-	ds18b20_gpio_set_dir(pdata, 1);
+	
+	/* 
+	  bus waits for 485 us and master releases 
+	  bus and goes to recieve mode 
+	*/
+	gpio_direction_input(pdata->pin);
 	udelay(70);
 
-	result = ds18b20_gpio_read_bit(pdata) & 0X1;
+	/* 
+	  as master releases bus, pullup reg pulls bus 
+	  high and when ds senses rising edge it send 
+	  a presense pulse to let bus know that it's ready
+	*/
+        result = ( gpio_get_value(pdata->pin) ? 1 : 0 ) & 0x1;
+
 	msleep(1);
 	
 	return result;
@@ -343,6 +354,7 @@ static int ds18b20_gpio_init(struct ds18b20_data *p_data)
         }
 
 	gpio_direction_input(p_data->pin);
+
 	
 	return 0;
 }
