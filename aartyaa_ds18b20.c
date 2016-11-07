@@ -236,7 +236,6 @@ static int ds18b20_reset_bus(struct ds18b20_data *pdata)
 {
 	int result;
 
-
 	printk("ds18b20_reset_bus : pin = %d\n", pdata->pin);	
 	
 	ds18b20_gpio_set_dir(pdata, 0);
